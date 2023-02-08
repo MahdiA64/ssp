@@ -1,0 +1,36 @@
+.reviewNavbar {
+    height: 200px;
+    background-color: cadetblue;
+    display: flex;
+    justify-content: center;
+}
+
+.reviewNavContainer{
+    width: 100%;
+    color: white;
+    display: flex;
+    justify-content: center;
+}
+
+.reviewLogo{
+    font-weight: 500;
+}
+
+.reviewDesc{
+    margin: 70px 0px;
+    font-weight: 300;
+}
+
+.reviewContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
+  
+  .review {
+    padding: 20px;
+    margin: 10px;
+    background-color: lightgray;
+    border-radius: 10px;
+  }

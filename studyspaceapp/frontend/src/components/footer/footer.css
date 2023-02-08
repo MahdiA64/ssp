@@ -1,0 +1,29 @@
+.footer {
+    max-width: 1024px;
+    font-size: 12px;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: cadetblue;
+    left: 0;
+    bottom: 0;
+    width: 100%;    
+    text-align: center;
+}
+
+.fLists {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.fList {
+    width: 100px;
+    max-width: 1024px;
+    list-style: none;
+}
+
+.fListItem {
+    width: 100px;
+    max-width: 1024px;
+    color: azure;
+    background-color: cadetblue;
+}

@@ -1,0 +1,51 @@
+.header {
+    background-color: cadetblue;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+    justify-content: center;
+}
+
+.headerContainer {
+    width: 100%;
+    max-width: 1024px;
+    margin: 20px 0px 100px 0px;
+}
+
+.headerList {
+    display: flex;
+    gap: 40px;
+    margin-bottom: 50px;
+}
+
+.headerListItem {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.headerListItem.active {
+    border: 1px solid white;
+    padding: 10px;
+    border-radius: 20px;
+}
+
+.headerDesc {
+    margin: 20px 0px;
+}
+
+a:link {
+    color: white;
+  }
+  
+  a:visited {
+    color: salmon;
+  }
+  
+  a:hover {
+    color: rgb(69, 208, 239);
+  }
+  
+  a:active {
+    color: white;
+  }
