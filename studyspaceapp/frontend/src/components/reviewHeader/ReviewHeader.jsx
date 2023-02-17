@@ -20,11 +20,11 @@ const ReviewHeader = () => {
                     <div className='reviewDesc'>
                     <span>We really appreciate your feedback! Please leave a review so we know where we can improve and we'll use your feedback to suggest the most popular study spaces!</span>
                     </div>
-                    {reviews.map(review => (
-                    <div key={review._id} className='review'>
+                    {reviews.length > 0 && reviews.map(review => (
+                        <div key={review._id} className='review'>
                         {review.text}
-                    </div>
-                ))}
+                </div>
+            ))}
                 </div>
             </span>
         </div>

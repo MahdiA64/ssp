@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+import secrets
 
 # Create your models here.
 
@@ -41,6 +42,13 @@ class Account(AbstractBaseUser):
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
+    access_token = models.CharField(max_length=256, null=True, blank=True)
+
+    def save(self, *args, **kwargs):
+        if not self.access_token:
+            self.access_token = secrets.token_urlsafe(32)
+        super(Account, self).save(*args, **kwargs)
+
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']

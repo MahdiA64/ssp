@@ -1,6 +1,17 @@
 from rest_framework import serializers
 from .models import StudySpace, Review, Booking
 
+class BookingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Booking
+        fields = '__all__'
+
+    def create(self, validated_data):
+        request = self.context.get('request')
+        user = request.user
+        booking = Booking.objects.create(user=user, **validated_data)
+        return booking
+
 class StudySpaceSerializer(serializers.ModelSerializer):
     class Meta:
         model = StudySpace
@@ -10,8 +21,3 @@ class ReviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = Review
         fields = ('id', 'study_space', 'rating', 'description')
-
-class BookingSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Booking
-        fields = ('id', 'start_time', 'end_time', 'group_space', 'pc_required', 'powered_seating')
