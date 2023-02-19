@@ -5,6 +5,7 @@ from account.forms import RegistrationForm, AccountAuthenticationForm
 from django.views.decorators.csrf import csrf_exempt
 import jwt
 from datetime import datetime, timedelta
+from rest_framework_simplejwt.tokens import AccessToken
 from django.conf import settings
 
 # def registration_view(request):
@@ -37,8 +38,9 @@ def registration_view(request):
             account = authenticate(email=email, password=raw_password)
             if account:
                 login(request, account)
-                response = redirect('http://localhost:5173/')
-                response.set_cookie('jwt_access_token', account.access_token, httponly=True)
+                token = AccessToken.for_user(account)
+                response = redirect(f'http://localhost:5173/?token={token}')
+                response.set_cookie('token', account.access_token, httponly=True)
                 return response
         else:
             context['registration_form'] = form
@@ -81,11 +83,12 @@ def login_view(request):
             if user:
                 login(request, user)
 
-                payload = {
-                    'user_id': user.id,
-                    'exp': datetime.utcnow() + timedelta(days=1),
-                }
-                token = jwt.encode(payload, settings.SECRET_KEY, algorithm='HS256')
+                # payload = {
+                #     'user_id': user.id,
+                #     'exp': datetime.utcnow() + timedelta(days=1),
+                # }
+                token = AccessToken.for_user(user)
+                # token = jwt.encode(payload, settings.SECRET_KEY, algorithm='HS256')
 
                 url = f'http://localhost:5173/?token={token}'
                 return redirect(url)

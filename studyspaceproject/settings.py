@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     'account',
     'studyspaceapp',
     'rest_framework',
+    'rest_framework_simplejwt',
     "corsheaders",
     'simple_chatbot',
 ]
