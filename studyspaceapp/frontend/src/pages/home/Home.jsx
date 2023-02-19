@@ -22,31 +22,29 @@ import Chatbot from '../chatbot/Chatbot';
 
 // export default Home;
 
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import axios from 'axios';
+import useJwt from '../../jwt/useJwt';
 
 function Home() {
-  const [token, setToken] = useState(null);
   const location = useLocation();
+  const jwt = useJwt();
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const token = params.get('token');
-    setToken(token);
+    if (!token) {
+      return;
+    }
+    jwt.setToken(token);
+    window.history.replaceState({}, document.title, '/');
   }, [location]);
 
   const handleLogout = () => {
     // Add logic for logging out the user
+    jwt.logout();    
   };
 
-  if (token) {
-    // Store the token in the localStorage
-    localStorage.setItem('token', token);
-
-    // Remove the token from the URL
-    window.history.replaceState({}, document.title, '/');
-  }
 
   return (
     <div>

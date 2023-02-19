@@ -1,41 +1,31 @@
 import React, { useState } from 'react';
-import Cookies from 'js-cookie';
+import { createBook, updateBook } from '../../api/book';
 
-const UpdateBookingForm = ({ booking }) => {
-  const [studySpace, setStudySpace] = useState(booking.study_space.name);
-  const [startTime, setStartTime] = useState(booking.start_time);
-  const [endTime, setEndTime] = useState(booking.end_time);
+const BookingForm = ({ booking }) => {
+  const [studySpace, setStudySpace] = useState(booking?.study_space.name);
+  const [startTime, setStartTime] = useState(booking?.start_time);
+  const [endTime, setEndTime] = useState(booking?.end_time);
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const csrftoken = Cookies.get('csrftoken');
     // Send a POST request to the Django backend to update the booking
-    fetch(`/bookings/${booking.id}/update/`, {
-      method: 'POST',
-      body: JSON.stringify({
+    if (booking){
+      updateBook(booking.id, {
         study_space: studySpace,
         start_time: startTime,
         end_time: endTime,
-      }),
-      headers: {
-        'Content-Type': 'application/json',
-        'X-CSRFToken': csrftoken
-      },
-    });
+      });
+    } else {
+      createBook({
+        study_space: studySpace,
+        start_time: startTime,
+        end_time: endTime,
+      });
+    }
   };
 
   const handleCancel = (event) => {
     event.preventDefault();
-    // Send a POST request to the Django backend to cancel the booking
-    fetch(`/bookings/${booking.id}/update/`, {
-      method: 'POST',
-      body: JSON.stringify({
-        cancel: true,
-      }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
   };
 
   return (
@@ -64,7 +54,7 @@ const UpdateBookingForm = ({ booking }) => {
         onChange={(event) => setEndTime(event.target.value)}
       />
       <br />
-      <button type="submit">Update Booking</button>
+      <button type="submit">{booking ? 'Update' : 'Create'} Booking</button>
       <button type="button" onClick={handleCancel}>
         Cancel Booking
       </button>
@@ -72,4 +62,4 @@ const UpdateBookingForm = ({ booking }) => {
   );
 };
 
-export default UpdateBookingForm;
+export default BookingForm;

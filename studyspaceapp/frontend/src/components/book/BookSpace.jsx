@@ -1,19 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import Cookies from 'js-cookie'
-import axios from 'axios';
-
+import React, { useState } from 'react';
+import {createBook} from '../../api/book';
 function BookingForm() {
   const [start_time, setStartTime] = useState('');
   const [end_time, setEndTime] = useState('');
   const [group_space, setGroupSpace] = useState(false);
   const [pc_required, setPcRequired] = useState(false);
   const [powered_seating, setPoweredSeating] = useState(false);
-
-  useEffect(() => {
-    const csrftoken = Cookies.get('csrftoken')
-
-    axios.defaults.headers.common['X-CSRFToken'] = csrftoken;
-  }, []);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -25,12 +17,7 @@ function BookingForm() {
       pc_required: pc_required,
       powered_seating: powered_seating
     };
-
-    axios.post('http://localhost:8000/api/book/', data, {
-      headers: {
-        'Authorization': `Bearer ${localStorage.getItem('token')}`
-      }
-    })
+    createBook(data)
       .then(response => {
         console.log(response.data);
       })
